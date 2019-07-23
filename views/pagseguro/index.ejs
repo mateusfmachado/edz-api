@@ -1,0 +1,59 @@
+<head>
+    <title>PagSeguro - Token</title>
+    <script type="text/javascript" src="https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.directpayment.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <button onclick="main();">
+        Generate Token
+    </button>
+    <script>
+        function main(){
+            $.ajax({ url: "/v1/api/pagamentos/session" }).done(function(data){
+
+                var idSessaoPagamento = data.sessionId;
+                console.log("ID da Sessao: ", idSessaoPagamento);
+
+                var hashUser = "";
+                PagSeguroDirectPayment.setSessionId(idSessaoPagamento);
+
+                hashUser = PagSeguroDirectPayment.getSenderHash();
+                console.log("Hash: ", hashUser);
+
+                var tokenc = "";
+
+                var mes = "12";
+                var ano = "2030";
+                var cartao = "4111111111111111";
+                var bin = "411111";
+
+                var brand = "";
+                var param = {
+                    cardNumber: cartao,
+                    brand,
+                    cvv: "123",
+                    expirationMonth: mes,
+                    expirationYear: ano,
+                    success: function(response){
+                        console.log("Credit Card Token: ",response);
+                        tokenc = response.card.token;
+                    },
+                    error: (r) => console.log(r),
+                    complete: (r) => console.log(r)
+                };
+
+                PagSeguroDirectPayment.getBrand({
+                    cardBin: bin,
+                    success: function(response){
+                        console.log(response);
+                        brand = response.name;
+                        PagSeguroDirectPayment.createCardToken(param);
+                    },
+                    error: (r) => console.log(r),
+                    complete: (r) => console.log(r)
+                });
+
+            });
+        }
+    </script>
+</body>
