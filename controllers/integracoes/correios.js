@@ -21,6 +21,8 @@ const calcularFrete = async ({ cep, produtos }) => {
     try {
         const resultados = await correios
         .calcPrecoPrazo({
+            nCdEmpresa: '99999999',
+            sDsSenha: '99999999',
             nCdServico: config.nCdServico,
             sCepOrigem: config.sCepOrigem,
             sCepDestino: cep,

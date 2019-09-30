@@ -34,8 +34,8 @@ const EntregaValidation = {
             carrinho: Joi.array().items(Joi.object({
                 produto: Joi.string().alphanum().length(24).required(),
                 variacao: Joi.string().alphanum().length(24).required(),
-                precoUnitario: Joi.number().optional(),
-                quantidade: Joi.number().optional()
+                precoUnitario: Joi.number().required(),
+                quantidade: Joi.number().required()
             })).required()
         }
     }
