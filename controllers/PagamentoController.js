@@ -169,8 +169,8 @@ class PagamentoController {
                     data: new Date()
                 });
 
-                if( status.toLowerCase().includes("pago") ) await QuantidadeValidation.atualizarQuantidade("confirmar_pedido", pedido);
-                else if( status.toLowerCase().includes("cancelado") ) await QuantidadeValidation.atualizarQuantidade("cancelar_pedido", pedido);
+                if( situacao.status === "Paga" ) await QuantidadeValidation.atualizarQuantidade("confirmar_pedido", pedido);
+                else if( situacao.status === "Cancelada" ) await QuantidadeValidation.atualizarQuantidade("cancelar_pedido", pedido);
             }
             return res.send({ success: true });
 
