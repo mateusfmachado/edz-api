@@ -121,11 +121,11 @@ class ClienteController {
                 cliente.nome = nome;
             }
             if(email) cliente.usuario.email = email;
-            console.log(cpf)
             if(cpf) cliente.cpf = cpf;
             if(telefones) cliente.telefones = telefones;
             if(endereco) cliente.endereco = endereco;
             if(dataDeNascimento) cliente.dataDeNascimento = dataDeNascimento;
+            await cliente.usuario.save();
             await cliente.save();
             return res.send({ cliente });
         } catch(e){
@@ -190,6 +190,7 @@ class ClienteController {
             if(telefones) cliente.telefones = telefones;
             if(endereco) cliente.endereco = endereco;
             if(dataDeNascimento) cliente.dataDeNascimento = dataDeNascimento;
+            await cliente.usuario.save();
             await cliente.save();
             cliente.usuario = {
                 email: cliente.usuario.email,
