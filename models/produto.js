@@ -18,4 +18,6 @@ const ProdutoSchema = Schema({
 
 ProdutoSchema.plugin(mongoosePaginate);
 
+ProdutoSchema.index({ titulo: "text", descricao: "text", sku: "text" });
+
 module.exports = mongoose.model("Produto", ProdutoSchema);

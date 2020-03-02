@@ -34,7 +34,7 @@ class ClienteController {
         const { offset, limit, loja } = req.query;
         try {
             const search = new RegExp(req.params.search, "i");
-            const clientes = await Cliente.find({ loja, nome: {$regex: search} });
+            const clientes = await Cliente.find({ loja, $text: { $search: search, $diacriticSensitive: false } });
             const pedidos = await Pedido.paginate(
                 { loja, cliente: { $in: clientes.map(item => item._id) } },
                 { offset, limit, populate: ["cliente","pagamento","entrega"] }
@@ -63,7 +63,7 @@ class ClienteController {
                 { 
                     loja: req.query.loja, 
                     $or: [
-                        { nome: { $regex: search } },
+                        { $text: { $search: search, $diacriticSensitive: false } },
                         { telefones: { $regex: search } }
                     ]
                 }, 

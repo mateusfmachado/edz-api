@@ -26,4 +26,6 @@ const ClienteSchema = Schema({
 
 ClienteSchema.plugin(mongoosePaginate);
 
+ClienteSchema.index({ nome: "text" });
+
 module.exports = mongoose.model("Cliente", ClienteSchema);

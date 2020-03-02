@@ -180,11 +180,7 @@ class ProdutoController {
             const produtos = await Produto.paginate(
                 {
                     loja: req.query.loja,
-                    $or: [
-                        { "titulo": { $regex: search } },
-                        { "descricao": { $regex: search } },
-                        { "sku": { $regex: search } },
-                    ]
+                    $text: { $search: search, $diacriticSensitive: false }
                 },
                 { offset, limit, sort: getSort(req.query.sortType), populate: ["categoria"] }
             );
